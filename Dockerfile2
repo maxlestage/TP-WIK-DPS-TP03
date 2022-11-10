@@ -1,0 +1,21 @@
+FROM rust:1.64 as build
+RUN useradd -ms /bin/bash --system apiuser
+RUN USER=apiuser cargo new --bin tp_wik_dps_tp02
+LABEL org.opencontainers.image.authors="maxime.lestage@ynov.com"
+WORKDIR /tp_wik_dps_tp02
+COPY ./Cargo.lock ./Cargo.lock
+COPY ./Cargo.toml ./Cargo.toml
+RUN cargo build --release
+RUN rm src/*.rs
+COPY ./src ./src
+RUN rm ./target/release/deps/tp_wik_dps_tp01*
+RUN cargo build --release
+
+
+FROM ubuntu:latest
+LABEL org.opencontainers.image.authors="maxime.lestage@ynov.com"
+WORKDIR / 
+COPY --from=build /tp_wik_dps_tp02/target/release/tp_wik_dps_tp01 .
+CMD ./tp_wik_dps_tp01
+EXPOSE 9000
+

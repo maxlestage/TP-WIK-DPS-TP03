@@ -1,0 +1,65 @@
+# Version de l'API Docker Compose à utiliser pour lire ce fichier
+version: "3.9"
+
+# Déclaration des services
+services:
+  # Un service nommée webapp
+  webapp:
+    # Définition du Dockerfile à build et à utiliser
+    build:
+      context: .
+      dockerfile: Dockerfile2
+
+    # Configuration des ports à exposer sur le réseau
+    ports:
+      - "8080"
+      - "9000"
+
+    # Nombre de réplicas souhaités du même container
+    deploy:
+      replicas: 4 # Ici on déploie 4 fois le container au sein du service webapp
+
+    # Rédemarrage automatique dans tous les cas lorsqu'un container s'arrête
+    restart: always
+
+    # Définir des variables d'environnement pour le service
+    environment:
+      - PING_LISTEN_PORT=9000
+
+    # Configure le réseau du service
+    # Il est accessible seulement via le réseau nommé
+    # front-network
+    networks:
+      - front-network
+
+  # Un service nommé proxy
+  proxy:
+    # L'image Docker a utilisé pour le service
+    image: nginx:latest
+
+    # Monter un fichier du répertoire courant de l'hôte
+    # sur le service
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+
+    # Configurer les ports exposés sur le réseau et
+    # le port-forwarding entre l'hôte et le service
+    ports:
+      - 8081:80
+
+    # Définir une relation de dépendance
+    # Si webapp n'est pas prêt alors pas de proxy
+    depends_on:
+      - webapp
+
+    # Configure le réseau du service
+    # Il est accessible seulement via le réseau nommé
+    # front-network
+    networks:
+      - front-network
+
+# Déclaration des réseaux
+networks:
+  # Un network nommé front-network qui utilise le driver bridge
+  front-network:
+    driver: bridge
