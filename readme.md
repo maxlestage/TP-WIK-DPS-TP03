@@ -14,7 +14,7 @@
 - Rust : `Comme langage de programmation.`
 - Actix : `Web framework pour Rust.`
 - Serde : `Outil de sérialization JSON.`
-- Hostname : `Permet d'afficher l'host de la machine dans le programme rust`
+- Hostname : `Permet d'afficher l'host de la machine dans la console`
 
 ## Lancer le projet :
 
