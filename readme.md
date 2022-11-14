@@ -1,7 +1,5 @@
 # TP-WIK-DPS-TP03
 
-AJOUTER DOCKER
-
 ## CONSIGNES :
 
 - Créer un docker-compose avec pour seul service un container basé sur le Dockerfile créé dans le TP WIK-DPS-TP02
@@ -59,5 +57,10 @@ http://127.0.0.1:9000/ping
 \*Retourne à l'utilisateur l'affichage du header sous la forme d'un JSON dans le body
 
 Si l'utilisateur essaie de visiter tout autres routes que `/ping`, le serveur renverra une erreur une 404, celle-ci est visible dans la console du navigateur dans l'onglet Network ou Réseau.
+
+### Taille de l'image docker :
+
+Poids de l'image docker actualisée pour le TP03
+![screenshot](https://github.com/maxlestage/TP-WIK-DPS-TP03/blob/main/TP03_ImageSized.png)
 
 LESTAGE Maxime - TP DevOps n°3 - Ynov 2022.
