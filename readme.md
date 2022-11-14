@@ -4,18 +4,19 @@ AJOUTER DOCKER
 
 ## CONSIGNES :
 
-- Mettre en place son environnement de développement et les bases du projet avec le moins de dépendances possibles.
-- Développer une API qui retourne au format JSON les headers de la requête quand il y une requête HTTP GET sur /ping.
-- Le serveur doit écouter sur un port configurable via la variable d'environnement : PING_LISTEN_PORT.
-
-- Réponse vide avec code 404 si quoi que ça soit d'autre que GET /ping ou code 500 si erreur inconnue.
-- Réalisation d'un README avec documentation sur le lancement du projet.
+- Créer un docker-compose avec pour seul service un container basé sur le Dockerfile créé dans le TP WIK-DPS-TP02
+- Augmenter le nombre de réplicas à 4 pour ce service
+- Modifier le docker-compose pour ajouter un reverse-proxy (nginx), seule le reverse-proxy doit être exposé sur votre hôte - sur le port 8080
+- Configurer nginx (nginx.conf) pour loadbalancer les requêtes vers le service basé sur votre image
+- Modifier le code de votre API pour afficher le hostname dans les logs à chaque requête sur /ping, lancer votre
+- docker-compose.yaml et observer l'effet du l'équilibrage de charge
 
 ## Choix des Technos :
 
 - Rust : `Comme langage de programmation.`
 - Actix : `Web framework pour Rust.`
 - Serde : `Outil de sérialization JSON.`
+- Hostname : `permet d'afficher l'host de la machine dans le programme rust`
 
 ## Lancer le projet :
 
@@ -28,6 +29,18 @@ cargo run // Cette commande permet de lancer le projet Rust sans configurer le p
 ```rs
 export PING_LISTEN_PORT=9000 && cargo run // Le port peut-être choisi au lancement de l'app, dans le cas présent on le définit sur 9000.
 ```
+
+```rs
+docker compose up // Affiche l'état de l'app avec le serveur démarré, ainsi que l'action du server balancing.
+```
+
+![screenshot](https://github.com/maxlestage/TP-WIK-DPS-TP03/blob/main/Docker_balancingServer.png)
+
+```rs
+docker inspect $(docker ps -q) --format '{{.Config.User}} {{.Name}}' // Permet de visualiser l'utilisateur, dans notre cas on run avec "userapi"
+```
+
+![screenshot](https://github.com/maxlestage/TP-WIK-DPS-TP03/blob/main/Display_user.png)
 
 ### Tester l'application :
 
