@@ -21,14 +21,6 @@
 Commande à lancer dans le temrinal à la racine du projet :
 
 ```rs
-cargo run // Cette commande permet de lancer le projet Rust sans configurer le port (par défaut 8080).
-```
-
-```rs
-export PING_LISTEN_PORT=9000 && cargo run // Le port peut-être choisi au lancement de l'app, dans le cas présent on le définit sur 9000.
-```
-
-```rs
 docker compose up // Affiche l'état de l'app avec le serveur démarré, ainsi que l'action du server balancing.
 ```
 
