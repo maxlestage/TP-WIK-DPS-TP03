@@ -2,3 +2,8 @@ target
 .DS_Store
 Cargo.lock
 
+.idea
+.idea/modules.xml
+.idea/TP-WIK-DPS-TP03.iml
+.idea/vcs.xml
+.idea/.gitignore
